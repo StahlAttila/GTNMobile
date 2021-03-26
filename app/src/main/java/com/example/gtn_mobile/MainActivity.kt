@@ -1,9 +1,8 @@
 package com.example.gtn_mobile
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -27,15 +26,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
         binding.buttonLogin.setOnClickListener {
-            Log.d("My-Test", "login button clicked")
             var username = binding.inputUsername.text.toString()
             var password = binding.inputPw.text.toString()
-            Log.d("My-Test", "before login: $username $password")
             login(username, password)
         }
 
         binding.tvSignUp.setOnClickListener {
-            Log.d("My-Test", "singin link clicked")
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
         }
@@ -58,17 +54,13 @@ class MainActivity : AppCompatActivity() {
                 val body = response.body?.string()
                 val gson = GsonBuilder().create()
                 val loginResponse = gson.fromJson(body, LoginResponse::class.java)
-                if (!loginResponse.jwt.isNullOrBlank()) {
+                if (loginResponse.jwt.isNotBlank()) {
+                    saveToken(loginResponse.jwt)
+                    readToken()
                     gotToGameActivity()
-                    Log.d("My-Test", "Success: $body")
+
                 } else {
                     Log.d("My-Test", "Success: ${loginResponse.message}")
-                    Handler(Looper.getMainLooper()).post(Runnable {
-                        Toast.makeText(
-                            applicationContext,
-                            loginResponse.message, Toast.LENGTH_LONG
-                        ).show()
-                    })
                 }
             }
         })
@@ -77,6 +69,23 @@ class MainActivity : AppCompatActivity() {
     fun gotToGameActivity() {
         val intent = Intent(this, GameActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun saveToken(token :String) {
+        val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.apply {
+            putString("JWT_TOKEN", "Bearer $token")
+        }.apply()
+
+        //Toast.makeText(this, "Login was successful", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun readToken() {
+        val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
+        val token = sharedPreferences.getString("JWT_TOKEN", null)
+
+        Log.d("My-Test", "retrieve token: $token")
     }
 
 

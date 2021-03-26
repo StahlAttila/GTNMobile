@@ -26,5 +26,9 @@ class SignUpActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.btSignup.setOnClickListener {
+
+        }
+
     }
 }
