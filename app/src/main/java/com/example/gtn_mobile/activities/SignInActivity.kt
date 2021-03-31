@@ -1,26 +1,28 @@
-package com.example.gtn_mobile
+package com.example.gtn_mobile.activities
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.example.gtn_mobile.databinding.ActivityMainBinding
+import com.example.gtn_mobile.databinding.ActivitySigninBinding
 import com.example.gtn_mobile.httprequests.HttpRequestCallBuilder
 import com.example.gtn_mobile.models.LoginResponse
 import com.google.gson.GsonBuilder
-import okhttp3.*
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.Response
 import java.io.IOException
 
 
-class MainActivity : AppCompatActivity() {
+class SignInActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivitySigninBinding
     private val callBuilder = HttpRequestCallBuilder()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivitySigninBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
         isLoggedIn()
@@ -66,7 +68,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun gotToGameActivity(username: String) {
-        val intent = Intent(this, GameActivity::class.java)
+        val intent = Intent(this, MainActivity::class.java)
         intent.putExtra("username", username)
         startActivity(intent)
     }
@@ -90,7 +92,7 @@ class MainActivity : AppCompatActivity() {
         val token = readSharedPref("JWT_TOKEN")
         if(token != "null") {
             val username = readSharedPref("USERNAME")
-            val intent = Intent(this, GameActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("username", username)
             startActivity(intent)
         }

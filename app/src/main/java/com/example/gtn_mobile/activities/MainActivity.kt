@@ -1,4 +1,4 @@
-package com.example.gtn_mobile
+package com.example.gtn_mobile.activities
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.gtn_mobile.databinding.ActivityGameBinding
+import com.example.gtn_mobile.databinding.ActivityMainBinding
 import com.example.gtn_mobile.httprequests.HttpRequestCallBuilder
 import com.example.gtn_mobile.models.RanksContainer
 import com.google.gson.GsonBuilder
@@ -16,13 +16,13 @@ import okhttp3.Callback
 import okhttp3.Response
 import java.io.IOException
 
-class GameActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityGameBinding
+class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
     private val callBuilder = HttpRequestCallBuilder()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityGameBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
         val username = intent.getStringExtra("username")
@@ -34,11 +34,22 @@ class GameActivity : AppCompatActivity() {
         binding.btnLogout.setOnClickListener {
             logout()
         }
+
+        binding.btnPlay.setOnClickListener {
+            val intent = Intent(this, GameActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     override fun onResume() {
         super.onResume()
         isPlayerLoggedIn()
+        val username = intent.getStringExtra("username")
+        if (username != null) {
+            setWelcomeMessage(username)
+            getRanks(username)
+        }
     }
 
     private fun readSharedPref(key: String): String {
@@ -55,7 +66,7 @@ class GameActivity : AppCompatActivity() {
 
     private fun isPlayerLoggedIn() {
         if (readSharedPref("JWT_TOKEN") == "null") {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, SignInActivity::class.java)
             startActivity(intent)
             Toast.makeText(this, "pls Log in", Toast.LENGTH_LONG).show()
         }
@@ -64,7 +75,7 @@ class GameActivity : AppCompatActivity() {
     private fun logout() {
         val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
         sharedPreferences.edit().clear().apply()
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, SignInActivity::class.java)
         startActivity(intent)
         Toast.makeText(this, "logged out", Toast.LENGTH_LONG).show()
     }
