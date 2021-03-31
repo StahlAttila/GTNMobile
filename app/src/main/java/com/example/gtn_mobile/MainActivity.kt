@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.gtn_mobile.databinding.ActivityMainBinding
 import com.example.gtn_mobile.httprequests.HttpRequestCallBuilder
@@ -24,6 +23,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        isLoggedIn()
 
         binding.buttonLogin.setOnClickListener {
             var username = binding.inputUsername.text.toString()
@@ -55,10 +55,9 @@ class MainActivity : AppCompatActivity() {
                 val gson = GsonBuilder().create()
                 val loginResponse = gson.fromJson(body, LoginResponse::class.java)
                 if (loginResponse.jwt.isNotBlank()) {
-                    saveToken(loginResponse.jwt)
-                    readToken()
-                    gotToGameActivity()
-
+                    saveToPrefs("JWT_TOKEN", "Bearer ${loginResponse.jwt}")
+                    saveToPrefs("USERNAME", loginResponse.username)
+                    gotToGameActivity(loginResponse.username)
                 } else {
                     Log.d("My-Test", "Success: ${loginResponse.message}")
                 }
@@ -66,27 +65,35 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    fun gotToGameActivity() {
+    fun gotToGameActivity(username: String) {
         val intent = Intent(this, GameActivity::class.java)
+        intent.putExtra("username", username)
         startActivity(intent)
     }
 
-    private fun saveToken(token :String) {
+    private fun readSharedPref(key: String): String {
+        val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
+        val value = sharedPreferences.getString(key, null)
+
+        return value.toString()
+    }
+
+    private fun saveToPrefs(key :String, value :String) {
         val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         editor.apply {
-            putString("JWT_TOKEN", "Bearer $token")
+            putString(key, value)
         }.apply()
-
-        //Toast.makeText(this, "Login was successful", Toast.LENGTH_SHORT).show()
     }
 
-    private fun readToken() {
-        val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
-        val token = sharedPreferences.getString("JWT_TOKEN", null)
-
-        Log.d("My-Test", "retrieve token: $token")
+    private fun isLoggedIn() {
+        val token = readSharedPref("JWT_TOKEN")
+        if(token != "null") {
+            val username = readSharedPref("USERNAME")
+            val intent = Intent(this, GameActivity::class.java)
+            intent.putExtra("username", username)
+            startActivity(intent)
+        }
     }
-
 
 }

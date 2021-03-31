@@ -1,6 +1,8 @@
 package com.example.gtn_mobile.httprequests
 
+import android.content.Context
 import okhttp3.Call
+import okhttp3.Headers
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -11,17 +13,31 @@ class HttpRequestCallBuilder {
 
     private var client = OkHttpClient()
 
-   //fun get(url: String, params: Map<*,*>) : Call{
-   //    //TODO implement this method
-   //
-   //}
+    fun buildGetCall(url: String, headers :Map<String, String>?): Call {
+        var headerBuilder = Headers.Builder()
+        if (headers != null) {
+            val it = headers.entries.iterator()
+            while (it.hasNext()) {
+                val pair = it.next()
+                headerBuilder.add(pair.key, pair.value)
+            }
+        }
 
-    fun buildPostCall(url: String, params: Map<*,*>?) : Call{
+        val request = Request.Builder()
+            .url(url)
+            .headers(headerBuilder.build())
+            .get()
+            .build()
+
+        return client.newCall(request)
+    }
+
+    fun buildPostCall(url: String, params: Map<*, *>?): Call {
         val mediaType = "application/json; charset=utf-8".toMediaType()
         val jsonObject = JSONObject()
-        if(params != null) {
+        if (params != null) {
             val it = params.entries.iterator()
-            while (it.hasNext()){
+            while (it.hasNext()) {
                 val pair = it.next()
                 jsonObject.put(pair.key.toString(), pair.value.toString())
             }
