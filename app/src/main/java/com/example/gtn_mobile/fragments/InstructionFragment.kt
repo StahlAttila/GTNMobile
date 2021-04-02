@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.gtn_mobile.R
 
-class EasyGameFragment : Fragment(R.layout.fragment_easy_game) {
+class InstructionFragment : Fragment(R.layout.fragment_instruction) {
 
 
 }

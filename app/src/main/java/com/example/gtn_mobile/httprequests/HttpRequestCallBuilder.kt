@@ -1,6 +1,5 @@
 package com.example.gtn_mobile.httprequests
 
-import android.content.Context
 import okhttp3.Call
 import okhttp3.Headers
 import okhttp3.MediaType.Companion.toMediaType
