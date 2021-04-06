@@ -52,7 +52,7 @@ class SignUpActivity : AppCompatActivity() {
         params.put("email", email)
         params.put("password", password)
 
-        callBuilder.buildPostCall(url, params).enqueue(object : Callback {
+        callBuilder.buildPostCall(url, null, params).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 Log.d("My-Test", "Failed to send signup request.")
             }

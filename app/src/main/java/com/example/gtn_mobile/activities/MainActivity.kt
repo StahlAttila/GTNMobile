@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity() {
                     val body = response.body?.string()
                     val gson = GsonBuilder().create()
                     val getRankResponse = gson.fromJson(body, RanksContainer::class.java)
-                    if (!getRankResponse.id.equals(null)) {
+                    if (getRankResponse != null && !getRankResponse.id.equals(null)) {
                         runOnUiThread {
                             // Stuff that updates the UI
                             binding.tvRankEasy.text = "Easy: ${getRankResponse.rankedEasy}"

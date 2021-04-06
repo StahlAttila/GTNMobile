@@ -31,7 +31,7 @@ class HttpRequestCallBuilder {
         return client.newCall(request)
     }
 
-    fun buildPostCall(url: String, params: Map<*, *>?): Call {
+    fun buildPostCall(url: String, headers: Map<String, String>?, params: Map<*, *>?): Call {
         val mediaType = "application/json; charset=utf-8".toMediaType()
         val jsonObject = JSONObject()
         if (params != null) {
@@ -42,8 +42,18 @@ class HttpRequestCallBuilder {
             }
         }
 
+        val headerBuilder = Headers.Builder()
+        if (headers != null) {
+            val it = headers.entries.iterator()
+            while (it.hasNext()) {
+                val pair = it.next()
+                headerBuilder.add(pair.key, pair.value)
+            }
+        }
+
         val request = Request.Builder()
             .url(url)
+            .headers(headerBuilder.build())
             .post(jsonObject.toString().toRequestBody(mediaType))
             .build()
 

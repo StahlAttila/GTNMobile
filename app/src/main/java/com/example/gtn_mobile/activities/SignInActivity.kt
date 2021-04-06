@@ -47,7 +47,7 @@ class SignInActivity : AppCompatActivity() {
         params.put("username", username)
         params.put("password", password)
 
-        callBuilder.buildPostCall(url, params).enqueue(object : Callback {
+        callBuilder.buildPostCall(url, null,  params).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 Log.d("My-Test", "Failed to execute request!")
             }
