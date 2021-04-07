@@ -15,10 +15,10 @@
         android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.108"
+        app:layout_constraintHorizontal_bias="0.085"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.049" />
+        app:layout_constraintVertical_bias="0.004" />
 
     <TextView
         android:id="@+id/tvEasyStatus"
@@ -28,10 +28,10 @@
         android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.131"
+        app:layout_constraintHorizontal_bias="0.743"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.447" />
+        app:layout_constraintVertical_bias="0.004" />
 
     <TextView
         android:id="@+id/tvEasyRange"
@@ -41,10 +41,10 @@
         android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.161"
+        app:layout_constraintHorizontal_bias="0.125"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.134" />
+        app:layout_constraintVertical_bias="0.082" />
 
     <TextView
         android:id="@+id/tvEasyLives"
@@ -54,10 +54,10 @@
         android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.118"
+        app:layout_constraintHorizontal_bias="0.094"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.211" />
+        app:layout_constraintVertical_bias="0.159" />
 
     <TextView
         android:id="@+id/tvEasyDirection"
@@ -67,30 +67,29 @@
         android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintHorizontal_bias="0.436"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.317" />
+        app:layout_constraintVertical_bias="0.258" />
 
     <EditText
         android:id="@+id/etGuess"
-        android:layout_width="265dp"
-        android:layout_height="145dp"
+        android:layout_width="255dp"
+        android:layout_height="82dp"
         android:ems="10"
         android:gravity="center"
         android:inputType="number"
         android:textSize="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvEasyLives"
-        app:layout_constraintVertical_bias="0.337" />
+        app:layout_constraintVertical_bias="0.246" />
 
     <Button
         android:id="@+id/btnGuess"
-        android:layout_width="266dp"
-        android:layout_height="108dp"
+        android:layout_width="269dp"
+        android:layout_height="132dp"
         android:text="Guess"
         android:textSize="40dp"
         app:layout_constraintBottom_toBottomOf="parent"

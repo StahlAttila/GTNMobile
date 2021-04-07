@@ -6,5 +6,6 @@ data class Game(
     var gameType: String,
     var lives : Int,
     var gameStatus : String?,
-    var guessDirection: String?
+    var guessDirection: String?,
+    var numberToGuess: Int
 )

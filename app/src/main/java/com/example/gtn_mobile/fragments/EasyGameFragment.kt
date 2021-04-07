@@ -37,19 +37,30 @@ class EasyGameFragment : Fragment(R.layout.fragment_easy_game) {
 
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         newGame()
 
-        binding.btnGuess.setOnClickListener {
-            val guess = Integer.valueOf(binding.etGuess.text.toString())
-            makeGuess(id, guess)
+        binding.etGuess.setOnClickListener {
+            binding.etGuess.setText("")
         }
 
+        binding.btnGuess.setOnClickListener {
+            if (binding.btnGuess.text.equals("NEW GAME")) {
+                newGame()
+            }
+
+            if(!binding.etGuess.text.isNullOrBlank()) {
+                val guess = Integer.valueOf(binding.etGuess.text.toString())
+                makeGuess(id, guess)
+            }
+        }
     }
 
     private fun newGame() {
-        var url = "https://gtn-api.herokuapp.com/api/game/new"
+        binding.etGuess.setText("")
+        val url = "https://gtn-api.herokuapp.com/api/game/new"
 
         val headers = HashMap<String, String>()
         val params = HashMap<String, String>()
@@ -72,8 +83,7 @@ class EasyGameFragment : Fragment(R.layout.fragment_easy_game) {
     }
 
     private fun makeGuess(id: Long, guess: Int) {
-
-        var url = "https://gtn-api.herokuapp.com/api/game/guess"
+        val url = "https://gtn-api.herokuapp.com/api/game/guess"
         val headers = HashMap<String, String>()
         headers["token"] = readSharedPref("JWT_TOKEN")
         val params = HashMap<String, String>()
@@ -111,7 +121,7 @@ class EasyGameFragment : Fragment(R.layout.fragment_easy_game) {
             binding.tvEasyLives.text =
                 "lives: " + gameResponse.lives
 
-            if(gameResponse.guessDirection == null) {
+            if (gameResponse.guessDirection == null) {
                 binding.tvEasyDirection.visibility = View.INVISIBLE
             } else {
                 binding.tvEasyDirection.visibility = View.VISIBLE
@@ -120,9 +130,12 @@ class EasyGameFragment : Fragment(R.layout.fragment_easy_game) {
 
             if (gameResponse.gameStatus == null) {
                 binding.tvEasyStatus.visibility = View.INVISIBLE
+                binding.btnGuess.text = "GUESS"
             } else {
                 binding.tvEasyStatus.visibility = View.VISIBLE
                 binding.tvEasyStatus.text = "status: " + gameResponse.gameStatus
+                binding.tvEasyDirection.text = "It was " + gameResponse.numberToGuess.toString()
+                binding.btnGuess.text = "NEW GAME"
             }
         }
     }

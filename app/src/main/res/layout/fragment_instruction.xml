@@ -8,15 +8,17 @@
 
     <TextView
         android:id="@+id/tvInstructionFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="instructions for the game"
+        android:layout_width="367dp"
+        android:layout_height="560dp"
+        android:text="Select a game mode from above. \n \nEasy game \n - lives: 3 \n - range 0 - 20
+                       \n\n Medium game \n - lives: 7 \n - range: 0 - 100
+                       \n\n Hard game \n - lives: 10 \n - range: 0 - 500"
         android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.239" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
